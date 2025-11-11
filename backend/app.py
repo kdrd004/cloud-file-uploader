@@ -4,14 +4,9 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "https://cloud-file-uploader-nine.vercel.app"}})
 
-# ✅ Allow both your deployed frontend and local dev
-CORS(app, resources={r"/*": {"origins": ["https://cloud-file-uploader-nine.vercel.app", "http://localhost:5173"]}})
-
-# ✅ Google Cloud credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "diya-file-uploader-key.json"
-
-@app.route("/", methods=["GET"])
+@app.route("/")
 def home():
     return jsonify({"message": "Backend running successfully!"})
 
@@ -26,8 +21,9 @@ def upload_file():
         blob.make_public()
         return jsonify({"url": blob.public_url})
     except Exception as e:
+        # Print the error to logs for debugging
+        print("UPLOAD ERROR:", e)
         return jsonify({"error": str(e)}), 500
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
