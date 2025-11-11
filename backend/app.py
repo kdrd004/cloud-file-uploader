@@ -4,23 +4,31 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
 
-# Tell Flask where your service account key file is
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "diya-file-uploader-key.json"  # rename based on your file
+# ✅ Allow both your deployed frontend and local dev
+CORS(app, resources={r"/*": {"origins": ["https://cloud-file-uploader-nine.vercel.app", "http://localhost:5173"]}})
 
-@app.route('/upload', methods=['POST'])
+# ✅ Google Cloud credentials
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "diya-file-uploader-key.json"
+
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "Backend running successfully!"})
+
+@app.route("/upload", methods=["POST"])
 def upload_file():
     try:
-        file = request.files['file']
+        file = request.files["file"]
         client = storage.Client()
-        bucket = client.bucket('diya-file-uploader')  # your bucket name
+        bucket = client.bucket("diya-file-uploader")  # your bucket name
         blob = bucket.blob(file.filename)
         blob.upload_from_file(file)
-        blob.make_public()  # make it viewable by anyone
-        return jsonify({'url': blob.public_url})
+        blob.make_public()
+        return jsonify({"url": blob.public_url})
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
