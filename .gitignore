@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.env
+.env.local
+.vscode/
+.idea/
+*.log
+# Explicitly ignore GCP service key
+backend/diya-file-uploader-key.json
+
