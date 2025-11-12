@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify
 from google.cloud import storage
 from flask_cors import CORS
 import os
+import traceback
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://cloud-file-uploader-nine.vercel.app"}})
+CORS(app, resources={r"/*": {"origins": "https://file-uploader-frontend-zeta.vercel.app"}})
+
 
 @app.route("/")
 def home():
@@ -23,6 +25,7 @@ def upload_file():
     except Exception as e:
         # Print the error to logs for debugging
         print("UPLOAD ERROR:", e)
+        print(traceback.format_exc())     # <-- full stack trace in Cloud Run logs
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":

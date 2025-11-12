@@ -10,4 +10,4 @@ __pycache__/
 *.log
 # Explicitly ignore GCP service key
 backend/diya-file-uploader-key.json
-
+*.json

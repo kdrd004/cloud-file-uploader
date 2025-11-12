@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # ✅ Set Google credentials path
-ENV GOOGLE_APPLICATION_CREDENTIALS="/app/diya-file-uploader-key.json"
+#ENV GOOGLE_APPLICATION_CREDENTIALS="/app/diya-file-uploader-key.json"
 
 # (Optional but harmless)
 ENV FLASK_APP=app.py
