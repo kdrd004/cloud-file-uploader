@@ -107,7 +107,7 @@ VITE_BACKEND_URL=http://localhost:5000
 
 ### Backend (.env)
 ```
-GCS_BUCKET_NAME=your-bucket-name
+GCS_BUCKET_NAME=your-bucket-name, mine: diya-file-uploader
 FLASK_ENV=development
 FLASK_DEBUG=1
 ```
@@ -127,15 +127,6 @@ cd backend
 
 # Build container
 gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/file-uploader
-
-# Deploy to Cloud Run
-gcloud run deploy file-uploader \
-  --image gcr.io/YOUR_PROJECT_ID/file-uploader \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated \
-  --set-env-vars GCS_BUCKET_NAME=your-bucket-name
-```
 
 ### Frontend on Vercel
 
