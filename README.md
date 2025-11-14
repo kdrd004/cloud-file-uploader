@@ -1,3 +1,6 @@
+### Live Demo
+Access the hosted frontend: https://file-uploader-frontend-zeta.vercel.app/
+
 # Cloud File Uploader 🚀
 
 A full-stack web application for uploading files to Google Cloud Storage with a React frontend and Flask backend.
